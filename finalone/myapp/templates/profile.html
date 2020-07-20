@@ -1,0 +1,119 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+<style>
+    input[type="text"]
+    {
+    border-radius:0px !important;
+    margin-bottom:3px !important;
+    }
+</style>
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Profile</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Profile</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+
+	</div>
+	</div>
+	<main id="main">
+
+              	{% csrf_token %}
+    <!-- ======= Contact Us Section ======= -->
+    <section id="contact" class="contact" style="padding-top:20px;padding-bottom:20px;">
+        {% if success%}
+        <p class="alert alert-success">{{success}}</p>
+        {%endif%}
+        <form class="checkout-form" method="post" action="/uprofile/" enctype="multipart/form-data">
+            {% csrf_token %}
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <h5></h5>
+
+            <img src="{{u.user_image.url}}" height="200" width="200"/>
+
+             <div class="form-row">
+                <div class="col-lg-12 form-group">
+					<p>{% if u.user_fname %} {{u.user_fname}} {% else %} &nbsp;{% endif %} {% if u.user_lname %} {{u.user_lname}} {% else %} &nbsp;{% endif %}</p>
+					<p>{% if u.user_city %} {{u.user_city}} {% else %} &nbsp;{% endif %} </p>
+                  <input type="file" name="user_image" class="form-control"   /><br/>
+                    <p>{% if u.user_info %} {{u.user_info}} {% else %} &nbsp;{% endif %} </p>
+                  <div class="validate"></div>
+                </div>
+
+              </div>
+          </div>
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="300">
+			  <h4 class="mb-3">User Profile</h4>
+
+
+              <div class="form-row">
+                <div class="col-lg-12 form-group">
+					<label>User Info</label>
+                  <textarea name="user_info" class="form-control" >{% if u.user_info %} {{u.user_info}} {% else %} &nbsp;{% endif %}</textarea>
+                  <div class="validate"></div>
+                </div>
+
+              </div>
+
+              <div class="form-row">
+                <div class="col-lg-6 form-group">
+					<label>Firstname</label>
+                  <input type="text" name="user_fname" class="form-control" value="{% if u.user_fname %} {{u.user_fname}} {% else %} &nbsp;{% endif %}"/>
+                  <div class="validate"></div>
+                </div>
+
+                <div class="col-lg-6 form-group">
+					<label>Lastname</label>
+                  <input type="text" name="user_lname" class="form-control"  value="{% if u.user_lname %} {{u.user_lname}} {% else %} &nbsp;{% endif %}" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+               <div class="form-row">
+                <div class="col-lg-12 form-group">
+					<label>Location</label>
+                  <input type="text" name="user_city" class="form-control"  value="{% if u.user_city %} {{u.user_city}} {% else %} &nbsp;{% endif %}" />
+                  <div class="validate"></div>
+                </div>
+              </div>
+                <div class="form-row">
+                <div class="col-lg-12 form-group">
+					<label>Phone no.</label>
+                  <input type="text" name="user_phone" class="form-control"  value="{% if u.user_phone %} {{u.user_phone}} {% else %} &nbsp;{% endif %}"/>
+                  <div class="validate"></div>
+                </div>
+              </div>
+
+
+              <div><button type="submit" class="btn btn-primary">Update Profile</button></div>
+
+          </div>
+
+        </div>
+
+      </div>
+               </form>
+    </section><!-- End Contact Us Section -->
+
+
+  </main><!-- End #main -->
+
+
+
+	
+
+
+{% include 'footer.html' %}

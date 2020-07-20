@@ -1,0 +1,127 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container" >
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Ad Detail</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Ad Detail</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- product section -->
+	<section class="product-section">
+		<div class="container">
+			<div class="back-link">
+				<a href="./category.html"> &lt;&lt; Back to Category</a>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="product-pic-zoom">
+						<img class="product-big-img" src="{{ad.image.url}}" alt="">
+					</div>
+					<div class="product-thumbs" tabindex="1" style="overflow: hidden; outline: none;">
+						<div class="product-thumbs-track">
+							<div class="pt active" data-imgbigurl="{{ad.image.url}}"><img src="{{ad.image.url}}" alt=""></div>
+							<div class="pt" data-imgbigurl="{{ad.image1.url}}"><img src="{{ad.image1.url}}" alt=""></div>
+							<div class="pt" data-imgbigurl="{{ad.image2.url}}"><img src="{{ad.image2.url}}" alt=""></div>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 product-details">
+					<h2 class="p-title">{{ad.title}}</h2>
+					<h3 class="p-price">Rs. {{ad.price}}</h3>
+					<p>{{ad.description}}</p>
+
+
+
+					<!--<a href="#" class="site-btn" style="margin-bottom:10px;">Chat with Seller</a>-->
+
+					<div id="accordion" class="accordion-area">
+						<div class="panel">
+							<div class="panel-header" id="headingOne">
+								<button class="panel-link " data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">Chat with Seller : {{ad.ad_postedby}}</button>
+							</div>
+							<div id="collapse1" class="collapse " aria-labelledby="headingOne" data-parent="#accordion">
+								<div class="panel-body">
+										<form class="contact-form" method="post" action="/sendmessage/{{ad.id}}/">
+						{% csrf_token %}
+						<label>Subject</label>
+						<input type="text"   name="subject">
+						<label>Your Message</label>
+						<textarea name="message">
+
+						</textarea>
+
+						<button class="site-btn" name="btnregister">Send Message</button>
+					</form>
+
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- product section end -->
+
+
+	<!-- RELATED PRODUCTS section -->
+	<section class="related-product-section">
+		<div class="container">
+			<div class="section-title">
+				<h2>RELATED PRODUCTS</h2>
+			</div>
+			<div class="product-slider owl-carousel">
+
+
+				 {% for i in relateddata %}
+				<div class="product-item">
+					<div class="pi-pic">
+						<img src="{{i.image.url}}" alt="" class="img" style="height:180px">
+						<div class="pi-links">
+							<a href="/detail/{{i.id}}/" class="add-card"><i class="flaticon-bag"></i><span>VIEW AD</span></a>
+
+						</div>
+					</div>
+					<div class="pi-text">
+						<h6>Rs. {{i.price}}</h6>
+						<p>{{i.title}} </p>
+					</div>
+				</div>
+				 {% endfor %}
+
+
+			</div>
+		</div>
+	</section>
+<section class="banner-section">
+		<div class="container">
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr2.jpg'%}">
+
+			</div>
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr1.jpg'%}">
+
+			</div>
+		</div>
+	</section>
+	{% include 'footer.html' %}

@@ -1,0 +1,98 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+<style>
+.img1
+{
+    height:100px;
+    width:150px !important;
+    display:block;
+
+ }
+ img {
+    max-width: none;
+}
+</style>
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Inbox</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Inbox</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Page info end -->
+	<!-- Page info end -->
+
+
+	<!-- cart section end -->
+	<section class="cart-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="">
+						<h4 style="margin-bottom:18px">Inbox</h4>
+						<div class="cart-table-warp">
+								{% if mdata %}
+							<table id="adTable" class="table">
+							<thead>
+								<tr>
+									<th class="product-th">Title</th>
+									<th class="product-th">Message</th>
+									<th class="quy-th">Recieved On</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								{% for m in mdata %}
+								<tr id="">
+									<td class="product-col ad_data">
+										<img src="" alt=""  class="img-circle"><br/>
+										<p>{{m.r_id}}</p>
+									</td>
+									<td>
+
+										<div class="pc-title">
+											<h5 class="title" name="title">{{m.subject}}</h5>
+											<p class="price " name="price">{{m.message}}</p>
+										</div>
+									</td>
+
+									<td class="size-col ad_data">
+										<p class="loc ad_data" name="location">{{m.posted_on}}</p>
+
+
+									</td>
+
+
+								</tr>
+                            {% endfor %}
+							</tbody>
+						</table>
+							{% else %}
+							<p class="alert alert-success">There are no messages in inbox</p>
+						{% endif %}
+						</div>
+						</div>
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<!-- cart section end -->
+
+{% include 'footer.html' %}

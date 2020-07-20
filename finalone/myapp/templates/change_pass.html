@@ -1,0 +1,50 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Change Password</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Change Password</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- Contact section -->
+	<section class="contact-section" style="padding-bottom:30px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 contact-info">
+					 {% if success%}
+					<p class="alert alert-success">{{success}}</p>
+					{%endif%}
+					<form class="contact-form" method="post" action="/change_pass/">
+						{% csrf_token %}
+						<input type="password" placeholder="Old Password" name="oldpass">
+						<input type="password" placeholder="Confirm Password"  name="confirmpass">
+						<input type="password" placeholder="New Password"  name="new_pass1">
+
+
+						<button class="site-btn" name="btnregister">CHANGE PASSWORD</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+
+{% include 'footer.html' %}

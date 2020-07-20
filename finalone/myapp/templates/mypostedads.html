@@ -1,0 +1,226 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+<style>
+.img1
+{
+    height:100px;
+    width:150px !important;
+    display:block;
+
+ }
+ img {
+    max-width: none;
+}
+</style>
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>My Posted Ads</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">My Posted Ads</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- cart section end -->
+	<section class="cart-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="">
+						<h4 style="margin-bottom:18px">My Posted Ads</h4>
+						<div class="cart-table-warp">
+							{% if ads %}
+							<table id="adTable" class="table">
+							<thead>
+								<tr>
+									<th class="product-th">Title</th>
+									<th class="product-th">Title</th>
+									<th class="quy-th">Location</th>
+									<th class="total-th">Action</th>
+									<th class="total-th">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for ad in ads %}
+								<tr id="ad-{{ad.id}}">
+									<td class="product-col ad_data">
+										<img src="{{ad.image.url}}" alt=""  class="img1" style="height:150px;width:170px;"><br/>
+									</td>
+									<td>
+										<p class="cat" name="cat">{{ad.categories}}</p>
+										<div class="pc-title">
+											<h5 class="title" name="title">{{ad.title}}</h5>
+											<p class="price" name="price">Rs. {{ad.price}}</p>
+											<p class="desc" name="desc">Rs. {{ad.description}}</p>
+										</div>
+									</td>
+
+									<td class="size-col ad_data">
+										<p class="loc ad_data" name="location">{{ad.location}}</p>
+										<p class="contact ad_data" name="contact">{{ad.contact}}</p>
+
+									</td>
+									<td><a href="/editad/{{ad.id}}/">EDIT AD</a></td>
+									<!--<td class="total-col"><button class="btn btn-link form-control" onClick="editAd({{ad.id}})" data-toggle="modal" data-target="#myModal">EDIT</button></td>-->
+									<td class="total-col"><button class="btn btn-link form-control" onClick="deleteAd({{ad.id}})">DELETE</button></td>
+								</tr>
+                            {% endfor %}
+							</tbody>
+						</table>
+							{% else %}
+							<p class="alert alert-success">You havenot posted any ad yet.</p>
+						{% endif %}
+						</div>
+
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+	<!-- cart section end -->
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Update Ad Details</h4>
+        </div>
+        <form id="updateAd" method="post" >
+			{% csrf_token %}
+        <div class="modal-body">
+            <input class="form-control" id="id" type="hidden" name="formId"/>
+            <label for="title">Title</label>
+            <input class="form-control" id="title" type="text" name="title"/>
+            <label for="loc">Location</label>
+             <select  class="form-control loc" id="loc"  name="loc">
+					<option>--Choose Location--</option>
+					{% for i in location %}
+					<option value="{{i.id}}">{{i}}</option>
+					{% endfor %}
+			</select>
+            <label for="price">Price</label>
+            <input class="form-control" id="price" type="text" name="price" />
+			 <label for="price">Description</label>
+            <input class="form-control" id="description" type="text" name="description" />
+			 <label for="contact">Contact</label>
+            <input class="form-control contact" id="contact" type="text" name="contact" />
+			 <label for="category">Category</label>
+            <select  class="form-control cat" id="category"  name="category">
+					<option>--Choose Category--</option>
+					{% for i in category %}
+					<option value="{{i.id}}">{{i}}</option>
+					{% endfor %}
+			</select>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" >Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<script>
+function deleteAd(id) {
+  var action = confirm("Are you sure you want to delete this user?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "ad_delete" %}',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#adTable #ad-" + id).remove();
+            }
+        }
+    });
+  }
+}
+
+$("form#updateAd").submit(function() {
+
+    var id= $('input[name="formId"]').val().trim();
+    var title = $('input[name="title"]').val().trim();
+    var loc = $('select[name="loc"]').val().trim();
+    var price = $('input[name="price"]').val().trim();
+
+    if (title && price) {
+    	alert('dsfsdf');
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "ad_update" %}',
+            data: {
+                'id': id,
+                'title': title,
+                'loc': loc,
+                'price': price
+            },
+            type:'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.ad) {
+                  updateAdhtml(data.ad);
+                }
+            }
+        });
+
+    } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#updateAd').trigger("reset");
+    $('#myModal').modal('hide');
+    return false;
+});
+
+function updateAdhtml(user){
+    $("#ad-" + ad.id).children(".ad_data").each(function() {
+        var attr = $(this).attr("name");
+        if (attr == "title") {
+          $(this).text(ad.title);
+        } else if (attr == "loc") {
+          $(this).text(ad.loc);
+        } else {
+          $(this).text(ad.price);
+        }
+      });
+}
+// Update Django Ajax Call
+function editAd(id) {
+  if (id) {
+    tr_id = "#ad-" + id;
+    title = $(tr_id).find(".title").text();
+    price = $(tr_id).find(".price").text();
+    loc = $(tr_id).find(".loc").text();
+    desc = $(tr_id).find(".desc").text();
+    contact = $(tr_id).find(".contact").text();
+    cat = $(tr_id).find(".cat").text();
+    $('#id').val(id);
+    $('#title').val(title);
+    $('#price').val(price);
+    $('#loc').val(loc);
+    $('#cat').val(cat);
+    $('#description').val(desc);
+    $('#contact').val(contact);
+  }
+}
+
+</script>
+{% include 'footer.html' %}

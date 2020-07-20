@@ -1,0 +1,139 @@
+
+{%load static%}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<title>Uplistold</title>
+	<meta charset="UTF-8">
+	<meta name="description" content=" Uplistold">
+	<meta name="keywords" content="Uplistold, creative, html">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link href="img/favicon.ico" rel="shortcut icon"/>
+
+	<!-- Google Font -->
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/flaticon.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}"/>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+<style>
+.logo
+{
+	font-size: 30px;
+    font-weight: bold;
+    color:#282828;
+}
+</style>
+	<!-- Header section -->
+	<header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-2 text-center text-lg-left">
+						<!-- logo -->
+						<a href="{% url 'home'%}" class="site-logo logo">
+							Uplistold
+						</a>
+					</div>
+					<div class="col-xl-4 col-lg-3">
+						<form class="header-search-form" method="post" action="/searchad/">
+							 {% csrf_token %}
+							<input type="text" placeholder="Search ad ...." name="txtsearch">
+							<button type="submit"><i class="flaticon-search"></i></button>
+						</form>
+
+					</div>
+					<div class="col-xl-6 col-lg-7">
+						<div class="user-panel">
+							{% if user.is_authenticated %}
+							<div class="up-item">
+
+
+								 <a href="/change_pass" class="text-primary" style="margin-right:7px;">Change Password</a>
+								 <a href="/uprofile"  class="text-primary" style="margin-right:7px;">Account Settings</a>
+								 <a href="/postad"  class="text-primary" style="margin-right:7px;">Post Ad</a>
+								 <a href="/myads"  class="text-primary" style="margin-right:7px;">My Posted Ads</a>
+								 <a href="/inbox"  class="text-primary" style="margin-right:7px;">Inbox</a>
+								 <a href="/outbox"  class="text-primary" style="margin-right:7px;">Outbox</a>
+							</div>
+							<div class="up-item">
+								<span class="flaticon-profile">Welcome <b class="text-danger">{{request.user}}</b></span>
+								 <a href="/logout" class="text-primary" style="margin-right:7px;">Log Out</a>
+							</div>
+
+							{% else %}
+							<div class="up-item">
+								<i class="flaticon-profile"></i>
+								<a href="/login">Sign</a> In </a>
+							</div>
+							<div class="up-item">
+
+								<a href="/register"> Create Account</a>
+							</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<nav class="main-navbar">
+			<div class="container">
+				<!-- menu -->
+				<ul class="main-menu">
+					<li><a href="/">Home</a></li>
+
+
+					<li><a href="#">Categories</a>
+						<ul class="sub-menu">
+							{% if catdata %}
+							{% for item in catdata %}
+							<li><a href="/adbycat/{{item.id}}/">{{item}}</a></li>
+							{% endfor %}
+							{% endif %}
+
+						</ul>
+					</li>
+
+					<li><a href="/contact/">Contact Us</a></li>
+					<li><form class="header-search-form" method="post" action="/searchadbyloc/">
+							 {% csrf_token %}
+						<select style="width:200px;padding:7px;" name="location">
+							{% for item in loc %}
+							<option value="{{item.id}}">{{item.location_name}}</option>
+							{% endfor %}
+					</select>
+							<button type="submit"><i class="flaticon-search"></i></button>
+						</form></li>
+				</ul>
+
+			</div>
+		</nav>
+	</header>
+	<!-- Header section end -->
+<style>
+	.contact-form input, .contact-form textarea,.contact-form button {
+	border-radius:0 !important;
+	}
+</style>

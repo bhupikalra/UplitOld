@@ -1,0 +1,62 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Contact Us</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Contact Us</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Page info end -->
+	<!-- Page info end -->
+
+
+	<!-- Contact section -->
+	<section class="contact-section" style="padding-bottom:30px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 contact-info">
+					<h3>Get in touch</h3>
+					<p>Main Str, no 23, New York</p>
+					<p>+546 990221 123</p>
+					<p>hosting@contact.com</p>
+					<div class="contact-social">
+						<a href="#"><i class="fa fa-pinterest"></i></a>
+						<a href="#"><i class="fa fa-facebook"></i></a>
+						<a href="#"><i class="fa fa-twitter"></i></a>
+						<a href="#"><i class="fa fa-dribbble"></i></a>
+						<a href="#"><i class="fa fa-behance"></i></a>
+					</div>
+				</div>
+				<div class="col-lg-9 contact-info">
+					<form class="contact-form" method="post" action="/contact/">
+						{% csrf_token %}
+						<input type="text" placeholder="Your name" name="name">
+						<input type="text" placeholder="Your e-mail" name="ëmail">
+						<input type="text" placeholder="Subject" name="subject">
+						<textarea placeholder="Message" name="message"></textarea>
+						<button class="site-btn">SEND NOW</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+	</section>
+	<!-- Contact section end -->
+
+
+
+	<!-- Related product section end -->
+{% include 'footer.html' %}

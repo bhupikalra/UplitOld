@@ -1,0 +1,71 @@
+
+{%load static%}
+{% include 'header.html' %}
+	<!-- Hero section -->
+<style>
+	.img {
+    max-width: 100%;
+    height: 200px;
+    width: 100%;
+}
+</style>
+
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<h4>Search Results by Category</h4>
+
+		</div>
+	</div>
+	<!-- Page info end -->
+
+
+
+
+	<!-- Product filter section -->
+	<section class="product-filter-section" style="padding-top:30px;">
+		<div class="container">
+
+
+			<div class="row">
+                {% for i in adcat %}
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item" style="height:330px">
+						<div class="pi-pic">
+							<img src="{{i.image.url}}" alt="" class="img">
+							<div class="pi-links">
+								<a href="/detail/{{i.id}}/" class="add-card">VIEW AD</a>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>Rs. {{i.price}}</h6>
+							<p>{{i.title}} </p>
+						</div>
+					</div>
+						</div>
+                    {% endfor %}
+
+
+
+		</div>
+		</div>
+	</section>
+	<!-- Product filter section end -->
+
+
+
+
+	<section class="banner-section">
+		<div class="container">
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr2.jpg'%}">
+
+			</div>
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr1.jpg'%}">
+
+			</div>
+		</div>
+	</section>
+	<!-- Banner section end  -->
+
+{% include 'footer.html' %}

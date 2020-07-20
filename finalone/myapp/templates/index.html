@@ -1,0 +1,182 @@
+
+{%load static%}
+{% include 'header.html' %}
+	<!-- Hero section -->
+<style>
+	.img {
+    max-width: 100%;
+    height: 200px;
+    width: 100%;
+}
+.demo
+{
+	color:red;
+	background-color:red;
+}
+.demo1
+{
+	color:blue;
+	background-color:blue;
+}
+</style>
+
+	<!-- Hero section end -->
+
+
+
+	<!-- Features section -->
+	<section class="features-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{%static 'img/icons/1.png' %}" alt="#">
+						</div>
+						<h2>Buy or Sell</h2>
+					</div>
+				</div>
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{% static 'img/icons/2.png' %}" alt="#">
+						</div>
+						<h2>Premium ADs</h2>
+					</div>
+				</div>
+				<div class="col-md-4 p-0 feature">
+					<div class="feature-inner">
+						<div class="feature-icon">
+							<img src="{%static 'img/icons/3.png' %}" alt="#">
+						</div>
+						<h2>Best Ads</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+<section class="banner-section">
+		<div class="container">
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr2.jpg'%}">
+
+			</div>
+
+		</div>
+	</section>
+	<!-- Features section end -->
+
+
+
+
+	<!-- Product filter section -->
+	<section class="product-filter-section">
+		<div class="container">
+			<div class="section-title">
+					<h2 style="margin-top:30px">BROWSE BY CATEGORY</h2>
+			</div>
+			<ul class="product-filter-menu">
+				{% for i in catdata %}
+				<li><a href="adbycat/{{i.id}}/">{{i.category_name}}</a></li>
+				{% endfor %}
+
+			</ul>
+			<div class="section-title">
+					<h2 style="margin-top:30px">BROWSE TOP TRENDING ADS</h2>
+			</div>
+			<div class="row">
+                {% for i in data %}
+				<div class="col-lg-3 col-sm-6">
+					<div class="product-item" style="height:330px">
+						<div class="pi-pic">
+							<img src="{{i.image.url}}" alt="" class="img">
+							<div class="pi-links">
+								<a href="detail/{{i.id}}/" class="add-card">VIEW AD</a>
+								<input id="üserid" type="hidden" value="{{request.user}}"/>
+								<button class="wishlist-btn" ><i  id="ad{{i.id}}" onClick="adfavourite({{i.id}})" class="flaticon-heart"></i></button>
+							</div>
+						</div>
+						<div class="pi-text">
+							<h6>${{i.price}}</h6>
+							<p>{{i.title}} </p>
+						</div>
+					</div>
+						</div>
+                    {% endfor %}
+
+					{% if data.has_other_pages %}
+						<ul class="pagination">
+							{% if data.has_previous %}
+								<li><a href="?page={{ data.previous_page_number}}">&laquo;</a></li>
+							{% else %}
+								<li class="disabled"><span>&laquo;</span></li>
+							{% endif %}
+							{% for i in data.paginator.page_range %}
+								{% if data.number == i %}
+									<li class="äctive"><span>{{i}}</span><span class="sr-only">(current)</span></li>
+								{% else %}
+									<li><a href="?page={{i}}">{{i}}</a></li>
+								{% endif %}
+							{% endfor%}
+							{% if data.has_next %}
+								<li><a href="?page={{ data.next_page_number}}">&laquo;</a></li>
+							{% else %}
+								<li class="disabled"><span>&laquo;</span></li>
+							{% endif %}
+
+						</ul>
+					{% endif %}
+
+		</div>
+		</div>
+	</section>
+
+
+
+	<!-- Banner section -->
+	<section class="banner-section">
+		<div class="container">
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr2.jpg'%}">
+
+			</div>
+			<div class="banner set-bg" data-setbg="{%static 'img/bannr1.jpg'%}">
+
+			</div>
+		</div>
+	</section>
+	<!-- Banner section end  -->
+<script>
+function adfavourite(id) {
+
+    var aid= id;
+    var uid = $('input[name="userid"]').text();
+
+    $.ajax({
+        url: '{% url "ad_favourite" %}',
+          data: {
+                'ad_id': aid,
+                'user_id': uid,
+
+            },
+        dataType: 'json',
+        success: function (data) {
+            if (data.result) {
+            //console.log("#ad"+aid);
+            $("#ad"+aid).addClass("demo1");
+            $("#ad"+aid).removeClass("demo");
+              //alert("inserted");
+            }
+            else
+            {
+           // $("#ad"+aid).css("color", "yellow");
+
+            	$("#ad"+aid).addClass("demo");
+            	 $("#ad"+aid).removeClass("demo1");
+            	//alert("deleted");
+            }
+        }
+    });
+
+}
+
+</script>
+{% include 'footer.html' %}

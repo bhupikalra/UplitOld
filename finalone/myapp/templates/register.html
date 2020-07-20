@@ -1,0 +1,61 @@
+
+{%load static%}
+{% include 'header.html' %}
+
+
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Register</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Register</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- Contact section -->
+	<section class="contact-section" style="padding-bottom:30px;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 contact-info">
+
+					<form class="contact-form" method="post" action="/register/">
+						{% csrf_token %}
+						<label>Username</label>
+						<input type="text"  id="username" name="username">
+						<label>Your e-mail</label>
+						<input type="text"  id="email_id" name="email_id">
+						<label>Password</label>
+						<input type="password" id="password" name="password">
+
+						<button class="site-btn" name="btnregister">REGISTER</button>
+					</form>
+				</div>
+				<div class="col-lg-4">
+					<h4>Our Mission</h4>
+					<p class="lead">We empower people to upgrade their lives.
+					Our products and services make the exchange of goods and services easy
+					and convenient for everyone.
+					This benefits local communities and beyond, getting one step closer to a world
+						without waste.</p>
+				</div>
+			</div>
+		</div>
+
+	</section>
+	<!-- Contact section end -->
+
+
+
+
+{% include 'footer.html' %}

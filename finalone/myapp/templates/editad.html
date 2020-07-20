@@ -1,0 +1,106 @@
+
+{%load static%}
+{% include 'header.html' %}
+<style>
+    input[type="text"],select {
+    width: 100%;
+    height: 44px;
+    border: none;
+    padding: 0 18px;
+    background:
+    #f0f0f0;
+    border-radius: 0px !important;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+   textarea {
+    width: 100%;
+    height: 200px;
+    border: none;
+    padding: 0 18px;
+    background:
+    #f0f0f0;
+    border-radius: 7px !important;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+</style>
+	<!-- Page info -->
+	<div class="page-top-info">
+		<div class="container">
+			<div class="row" style="height:50px">
+				<div class="col-md-3">
+					<h4>Edit Ad</h4>
+					<div class="site-pagination">
+						<a href="">Home</a> /
+						<a href="">Edit Ad</a>
+					</div>
+				</div>
+				<div class="banner set-bg col-md-9" data-setbg="{%static 'img/bannr2.jpg'%}" >
+
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Page info end -->
+
+
+	<!-- checkout section  -->
+	<section class="checkout-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 order-2 order-lg-1">
+					<form class="checkout-form" method="post" enctype="multipart/form-data" action="/editad/{{ad.id}}/">
+							{% csrf_token %}
+
+
+						<div class="row address-inputs">
+							<div class="col-md-12">
+								<label>Enter Post Title</label>
+								<input type="text"  name="title" value="{{ad.title}}">
+								<label>Enter Post Details Here</label>
+                                <textarea  name="details" >{{ad.description}}</textarea>
+								<label>Category</label>
+								<select name="category">
+									<option>--Choose Category--</option>
+									{% for i in category %}
+
+									<option value="{{i.id}}" {% if ad.categories == i %} selected="selected" {% endif %}>{{i}}</option>
+									{% endfor %}
+								</select>
+								<label>Location</label>
+								<select name="location">
+									<option>--Choose Location--</option>
+									{% for i in location %}
+									<option value="{{i.id}}" {% if ad.location == i %} selected="selected" {% endif %}>{{i}}</option>
+									{% endfor %}
+								</select>
+								<label>Ad Image1</label>
+                                <input type="file" name="postimage" style="margin-bottom:15px"><br/>
+								<img src="{{ad.image.url}}" style="height:100px;width:100px"/><br/>
+								<label>Ad Image2</label>
+                                <input type="file" name="postimage1"  style="margin-bottom:15px"><br/>
+								<img src="{{ad.image1.url}}" style="height:100px;width:100px"/><br/>
+								<label>Ad Image3</label>
+                                <input type="file" name="postimage2"  style="margin-bottom:15px"><br/>
+								<img src="{{ad.image2.url}}" style="height:100px;width:100px"/><br/>
+								<label>Enter  Phone Number</label>
+								<input type="text"  name="contact" value="{{ad.contact}}">
+								<label>Enter Price</label>
+								<input type="text"  name="price" value="{{ad.price}}">
+							</div>
+
+						</div>
+
+						<button class=" btn btn-primary" type="submit">Update Ad</button>
+					</form>
+				</div>
+				<div class="col-lg-3 order-1 order-lg-2">
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- checkout section end -->
+
+	{% include 'footer.html' %}
